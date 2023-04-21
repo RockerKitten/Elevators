@@ -11,72 +11,49 @@ using System.IO;
 using System.Linq;
 using fastJSON;
 
-namespace Elevators
+namespace RKsElevators
 {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
     //[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
-    internal class Elevators : BaseUnityPlugin
+    internal class RKsElevators : BaseUnityPlugin
     {
-        public const string PluginGUID = "com.RockerKitten.Elevators";
-        public const string PluginName = "Elevators";
+        public const string PluginGUID = "com.RockerKitten.RKsElevators";
+        public const string PluginName = "RKsElevators";
         public const string PluginVersion = "1.0.0";
-
+        
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
-
         private AssetBundle BuildAssetBundle { get; set; }
-        //private AudioSource fireAudioSource;
-
         private Dictionary<BuildMaterial, BuildEffectLists> effects;
 
         private void Awake()
         {
+            AddLocalizations();
             LoadEmbeddedAssembly("fastJSON.dll");
-            this.BuildAssetBundle = AssetUtils.LoadAssetBundleFromResources("Elevators", Assembly.GetExecutingAssembly());
-
+            this.BuildAssetBundle = AssetUtils.LoadAssetBundleFromResources("rkc_elevator", Assembly.GetExecutingAssembly());
             PrefabManager.OnVanillaPrefabsAvailable += SetupAssets;
-            Jotunn.Logger.LogInfo("Elevators has landed");
+            Jotunn.Logger.LogInfo("Queueing elevator music... Elevator music initialized.");
         }
 
         private void SetupAssets()
         {
             this.effects = InitializeEffects();
-            InitializeBuildConstructionTools();
             InitializeBuildAssets();
             PrefabManager.OnVanillaPrefabsAvailable -= SetupAssets;
         }
 
-        private void InitializeBuildConstructionTools()
-        {
-            if (Chainloader.PluginInfos.ContainsKey("com.RockerKitten.CastleScepter"))
-            {
-                TableName = "_RKC_CustomTable";
-            }
-            else
-            {
-                TableName = "_HammerPieceTable";
-            }
-        }
 
         private void InitializeBuildAssets()
         {
-            var BuildAssets = LoadEmbeddedJsonFile<BuildAssets>("Buildassets.json");
-
-            foreach (var BuildPieceTable in BuildAssets.PieceTables)
-            {
-                foreach (var BuildPieceCategory in BuildPieceTable.Categories)
-                {
-                    foreach (var BuildPiece in BuildPieceCategory.Pieces)
-                    {
-                        var customPiece = this.BuildCustomPiece(BuildPieceTable, BuildPieceCategory, BuildPiece);
-
-                        // load supplemental assets (sfx and vfx)
-                        this.AttachEffects(customPiece.PiecePrefab, BuildPiece);
-
-                        PieceManager.Instance.AddPiece(customPiece);
-                    }
-                }
-            }
+            var BuildAssets = LoadEmbeddedJsonFile<BuildAssets>("RKsElevators.json");
+             foreach (var BuildPiece in BuildAssets.Pieces)
+             {
+                var customPiece = this.BuildCustomPiece(BuildPiece);
+                // load supplemental assets (sfx and vfx)
+                this.AttachEffects(customPiece.PiecePrefab, BuildPiece);
+                PieceManager.Instance.AddPiece(customPiece);
+             }
+                
         }
 
         private Dictionary<BuildMaterial, BuildEffectLists> InitializeEffects()
@@ -100,10 +77,7 @@ namespace Elevators
                     {
                         Place = createfxlist("sfx_build_hammer_wood", "vfx_Place_stone_wall_2x1"),
                         Break = createfxlist("sfx_wood_break", "vfx_SawDust"),
-                        Hit   = createfxlist("vfx_SawDust"),
-                        Open  = createfxlist("sfx_door_open"),
-                        Close = createfxlist("sfx_door_close"),
-                        Fuel  = createfxlist("vfx_HearthAddFuel"),
+                        Hit   = createfxlist("vfx_SawDust")
                     }
                 },
                 {
@@ -112,10 +86,7 @@ namespace Elevators
                     {
                         Place = createfxlist("sfx_build_hammer_stone", "vfx_Place_stone_wall_2x1"),
                         Break = createfxlist("sfx_rock_destroyed", "vfx_Place_stone_wall_2x1"),
-                        Hit   = createfxlist("sfx_Rock_Hit"),
-                        Open  = createfxlist("sfx_door_open"),
-                        Close = createfxlist("sfx_door_close"),
-                        Fuel  = createfxlist("vfx_HearthAddFuel"),
+                        Hit   = createfxlist("sfx_Rock_Hit")
                     }
                 },
                 {
@@ -124,10 +95,7 @@ namespace Elevators
                     {
                         Place = createfxlist("sfx_build_hammer_metal", "vfx_Place_stone_wall_2x1"),
                         Break = createfxlist("sfx_rock_destroyed", "vfx_HitSparks"),
-                        Hit   = createfxlist("vfx_HitSparks"),
-                        Open  = createfxlist("sfx_door_open"),
-                        Close = createfxlist("sfx_door_close"),
-                        Fuel  = createfxlist("vfx_HearthAddFuel"),
+                        Hit   = createfxlist("vfx_HitSparks")
                     }
                 }
             };
@@ -135,16 +103,18 @@ namespace Elevators
             return effects;
         }
 
-        //private void AddLocalizations()
-        //{
-        //    CustomLocalization customLocalization = new CustomLocalization();
-        //    customLocalization.AddTranslation("English", new Dictionary<String, String>
-        //    {
-        //        { "piece_wallrkc", "Wall" }
-        //    });
-        //}
+        private void AddLocalizations()
+        {
+            Localization = LocalizationManager.Instance.GetLocalization();
+            Localization.AddTranslation("English", new Dictionary<String, String>
+            {
+                { "piece_rk_elevatortall", "Tall Elevator"},{"jotunn_cat_elevators","RKs Elevators" },{"piece_rk_elevatortall_description","Elevator that goes from 8m to ground floor. No stopping between floors!"},
+                { "piece_rk_elevatorshort", "Shorter Elevator"},{ "piece_rk_elevator2", "Simple Elevator"},{"piece_rk_elevatorshort_description","Elevator that goes from 4m to ground floor. No stopping between floors!"},
+                {"piece_rk_elevator2_description","Simpler elevator that goes from 4m to ground floor. No stopping between floors!"}
+            });
+        }
 
-        private CustomPiece BuildCustomPiece(BuildPieceTable BuildPieceTable, BuildPieceCategories BuildPieceCategory, BuildPiece BuildPiece)
+        private CustomPiece BuildCustomPiece(BuildPiece BuildPiece)
         {
             var BuildPiecePrefab = this.BuildAssetBundle.LoadAsset<GameObject>(BuildPiece.PrefabName);
 
@@ -155,8 +125,8 @@ namespace Elevators
                 Description = BuildPiece.PrefabDescription,
                 // NOTE: could move override to json config if needed.
                 AllowedInDungeons = false,
-                PieceTable = BuildPieceTable.TableName,
-                Category = BuildPieceCategory.CategoryTabName,
+                PieceTable = "_HammerPieceTable",
+                Category = "$jotunn_cat_elevators",
                 Enabled = BuildPiece.Enabled
             };
             if (!string.IsNullOrWhiteSpace(BuildPiece.RequiredStation))
@@ -169,15 +139,6 @@ namespace Elevators
 
             pieceConfig.Requirements = requirements.ToArray();
             var customPiece = new CustomPiece(BuildPiecePrefab, fixReference: false, pieceConfig);
-            var material = BuildPiecePrefab.GetComponentsInChildren<Material>();
-            foreach (Material mat in material)
-            {
-                if (mat.name == "replace")
-                {
-                    mat.shader = Shader.Find("Custom/Piece");
-                }
-            }
-            Jotunn.Logger.LogInfo(BuildPiecePrefab.name);
             return customPiece;
         }
 
@@ -189,22 +150,7 @@ namespace Elevators
             var wearComponent = piecePrefab.GetComponent<WearNTear>();
             wearComponent.m_destroyedEffect = this.effects[BuildPiece.Material].Break;
             wearComponent.m_hitEffect = this.effects[BuildPiece.Material].Hit;
-
-            if (piecePrefab.TryGetComponent<Door>(out Door doorComponent))
-            {
-                doorComponent.m_openEffects = this.effects[BuildPiece.Material].Open;
-                doorComponent.m_closeEffects = this.effects[BuildPiece.Material].Close;
-            }
-
-            if (piecePrefab.TryGetComponent<Fireplace>(out Fireplace fireplaceComponent))
-            {
-                fireplaceComponent.m_fuelAddedEffects = this.effects[BuildPiece.Material].Fuel;
-                //fireplaceComponent.m_fuelItem = this.[BuildPiece.FuelItem];
-                // how to add fuel type?
-                //fireAudioSource = piecePrefab.GetComponentInChildren<AudioSource>();
-                //fireAudioSource.outputAudioMixerGroup = AudioMan.instance.m_ambientMixer;
-            }
-
+            
         }
 
         // LOADING EMBEDDED RESOURCES

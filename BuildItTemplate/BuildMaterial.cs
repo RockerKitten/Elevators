@@ -1,10 +1,9 @@
-﻿namespace BuildTemplate
+﻿namespace RKsElevators
 {
     public enum BuildMaterial
     {
         Wood,
         Stone,
-        Metal,
-        Crystal
+        Metal
     }
 }

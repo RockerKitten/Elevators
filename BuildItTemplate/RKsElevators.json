@@ -1,0 +1,54 @@
+{
+  "pieces": [
+    {
+      "prefabname": "rkc_elevator",
+      "displaynametoken": "$piece_rk_elevatortall",
+      "prefabdescription": "$piece_rk_elevatortall_description",
+      "requirements": [
+        {
+          "item": "RoundLog",
+          "amount": 20
+        },
+        {
+          "item": "IronNails",
+          "amount": 20
+        }
+      ],
+      "material": "Wood"
+    },
+    {
+      "prefabname": "rkc_elevatorshort",
+      "displaynametoken": "$piece_rk_elevatorshort",
+      "prefabdescription": "$piece_rk_elevatorshort_description",
+      "requirements": [
+        {
+          "item": "RoundLog",
+          "amount": 15
+        },
+        {
+          "item": "IronNails",
+          "amount": 15
+        }
+      ],
+      "material": "Wood"
+    },
+    {
+      "prefabname": "rkc_elevator2",
+      "displaynametoken": "$piece_rk_elevator2",
+      "prefabdescription": "$piece_rk_elevator2_description",
+      "requirements": [
+        {
+          "item": "RoundLog",
+          "amount": 10
+        },
+        {
+          "item": "IronNails",
+          "amount": 10
+        }
+      ],
+      "material": "Wood"
+    }
+  ]
+}
+    
+

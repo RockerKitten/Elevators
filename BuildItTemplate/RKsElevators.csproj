@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\JotunnLib.2.7.6\build\JotunnLib.props" Condition="Exists('..\packages\JotunnLib.2.7.6\build\JotunnLib.props')" />
+  <Import Project="..\packages\JotunnLib.2.11.5\build\JotunnLib.props" Condition="Exists('..\packages\JotunnLib.2.11.5\build\JotunnLib.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DEAF4438-8089-40ED-8175-398E1261D45B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildItTemplate</RootNamespace>
-    <AssemblyName>BuildItTemplate</AssemblyName>
+    <RootNamespace>RKsElevators</RootNamespace>
+    <AssemblyName>RKsElevators</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -45,14 +45,14 @@
     <StartWorkingDirectory>$(VALHEIM_INSTALL)</StartWorkingDirectory>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.10.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HarmonyX.2.10.0\lib\net45\0Harmony.dll</HintPath>
+    <Reference Include="0Harmony, Version=2.10.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HarmonyX.2.10.1\lib\net45\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="fastJSON, Version=2.4.0.0, Culture=neutral, PublicKeyToken=6b75a806b86095cd, processorArchitecture=MSIL">
       <HintPath>..\packages\fastJSON.2.4.0.4\lib\net40\fastJSON.dll</HintPath>
     </Reference>
-    <Reference Include="Jotunn, Version=2.7.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\JotunnLib.2.7.6\lib\net462\Jotunn.dll</HintPath>
+    <Reference Include="Jotunn, Version=2.11.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JotunnLib.2.11.5\lib\net462\Jotunn.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.dll</HintPath>
@@ -66,14 +66,14 @@
     <Reference Include="Mono.Cecil.Rocks, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
-    <Reference Include="MonoMod, Version=22.5.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoMod.22.5.1.1\lib\net452\MonoMod.exe</HintPath>
+    <Reference Include="MonoMod, Version=22.7.31.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoMod.22.7.31.1\lib\net452\MonoMod.exe</HintPath>
     </Reference>
-    <Reference Include="MonoMod.RuntimeDetour, Version=22.5.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoMod.RuntimeDetour.22.5.1.1\lib\net452\MonoMod.RuntimeDetour.dll</HintPath>
+    <Reference Include="MonoMod.RuntimeDetour, Version=22.7.31.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoMod.RuntimeDetour.22.7.31.1\lib\net452\MonoMod.RuntimeDetour.dll</HintPath>
     </Reference>
-    <Reference Include="MonoMod.Utils, Version=22.5.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoMod.Utils.22.5.1.1\lib\net452\MonoMod.Utils.dll</HintPath>
+    <Reference Include="MonoMod.Utils, Version=22.7.31.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoMod.Utils.22.7.31.1\lib\net452\MonoMod.Utils.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -88,16 +88,21 @@
     <Compile Include="BuildEffectLists.cs" />
     <Compile Include="BuildMaterial.cs" />
     <Compile Include="BuildPiece.cs" />
-    <Compile Include="BuildPieceCategories.cs" />
     <Compile Include="BuildPieceRequirement.cs" />
-    <Compile Include="BuildPieceTable.cs" />
-    <Compile Include="BuildFuelItem.cs" />
+    <Compile Include="G:\Valheim New\valheim\Valheim DllExport - 2023-04-13\Assets\Kittens Elevators\monoscripts\Elevators.cs">
+      <Link>Elevators.cs</Link>
+    </Compile>
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
-    <Compile Include="BuildTemplate.cs" />
+    <Compile Include="RKElevators.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <EmbeddedResource Include="RKsElevators.json" />
+    <None Include="Environment.props" />
+    <EmbeddedResource Include="G:\Valheim New\valheim\Valheim DllExport - 2023-04-13\AssetBundles\StandaloneWindows\rkc_elevator">
+      <Link>rkc_elevator</Link>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>
@@ -108,6 +113,9 @@
     <None Include="Package\manifest.json" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\packages\fastJSON.2.4.0.4\lib\net4\fastJSON.dll">
+      <Link>Lib\FastJSON\fastJSON.dll</Link>
+    </EmbeddedResource>
     <Content Include="Package\icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -124,6 +132,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\JotunnLib.2.7.6\build\JotunnLib.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\JotunnLib.2.7.6\build\JotunnLib.props'))" />
+    <Error Condition="!Exists('..\packages\JotunnLib.2.11.5\build\JotunnLib.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\JotunnLib.2.11.5\build\JotunnLib.props'))" />
   </Target>
 </Project>

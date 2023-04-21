@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BuildTemplate
+namespace RKsElevators
 {
     public class BuildPiece
     {
@@ -12,7 +12,7 @@ namespace BuildTemplate
 
         public List<BuildPieceRequirement> Requirements { get; set; }
 
-        public BuildMaterial Material { get; set; } = BuildMaterial.Stone;
+        public BuildMaterial Material { get; set; } = BuildMaterial.Wood;
         public string FuelItem { get; set; } = string.Empty;
     }
 }

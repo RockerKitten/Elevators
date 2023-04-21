@@ -6,10 +6,10 @@
 using Mono.Collections.Generic;
 using System.Collections.Generic;
 
-namespace BuildTemplate
+namespace RKsElevators
 {
     public class BuildAssets
     {
-        public List<BuildPieceTable> PieceTables { get; set; }
+        public List<BuildPiece> Pieces { get; set; }
     }
 }
